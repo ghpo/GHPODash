@@ -5,6 +5,14 @@ export default function ContasList({ contas }) {
   const [dataInicial, setDataInicial] = useState('')
   const [dataFinal, setDataFinal] = useState('')
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString)
+    const day = String(date.getDate()).padStart(2, '0')
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const year = date.getFullYear()
+    return `${day}/${month}/${year}`
+  }
+
   const handleLimparFiltros = () => {
     setDataInicial('')
     setDataFinal('')
@@ -52,7 +60,7 @@ export default function ContasList({ contas }) {
         doc.text(conta.descricao, 20, yPosition)
         doc.text(`R$ ${conta.valor.toFixed(2)}`, 80, yPosition)
         doc.text(conta.tipo, 120, yPosition)
-        doc.text(new Date(conta.data).toLocaleDateString(), 160, yPosition)
+        doc.text(formatDate(conta.data), 160, yPosition)
         yPosition += 10
         
         // Quebra de página se necessário
@@ -122,7 +130,7 @@ export default function ContasList({ contas }) {
                 <td className="px-4 py-4 text-sm text-gray-900 dark:text-gray-100">{conta.descricao}</td>
                 <td className="px-4 py-4 text-sm text-gray-900 dark:text-gray-100">R$ {conta.valor.toFixed(2)}</td>
                 <td className="px-4 py-4 text-sm text-gray-900 dark:text-gray-100">{conta.tipo}</td>
-                <td className="px-4 py-4 text-sm text-gray-900 dark:text-gray-100">{new Date(conta.data).toLocaleDateString()}</td>
+                <td className="px-4 py-4 text-sm text-gray-900 dark:text-gray-100">{formatDate(conta.data)}</td>
               </tr>
             ))}
           </tbody>
