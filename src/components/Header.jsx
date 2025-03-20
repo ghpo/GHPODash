@@ -20,7 +20,7 @@ export default function Header() {
   return (
     <header className="bg-gray-900 dark:bg-gray-800 text-white fixed top-0 w-full p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <h1 className="text-xl font-bold">Finanças</h1>
+        <h1 className="text-xl font-bold">GHPO System</h1>
         <button
           onClick={() => setDarkMode(!darkMode)}
           className="p-2 rounded-full hover:bg-gray-700 dark:hover:bg-gray-600 transition-colors"
