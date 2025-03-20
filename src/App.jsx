@@ -21,6 +21,7 @@ function App() {
     if (error) {
       console.error('Error fetching contas:', error)
     } else {
+      console.log('Contas carregadas:', data) // Adicionado log
       setContas(data)
     }
   }
@@ -34,6 +35,7 @@ function App() {
     if (error) {
       console.error('Error adding conta:', error)
     } else {
+      console.log('Nova conta adicionada:', data[0]) // Adicionado log
       setContas([...contas, data[0]])
     }
   }
