@@ -1,18 +1,41 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from './components/Header.jsx'
 import ContasForm from './components/ContasForm.jsx'
 import ContasList from './components/ContasList.jsx'
 import Relatorios from './components/Relatorios.jsx'
+import { supabase } from './supabaseClient'
 
 function App() {
-  const [contas, setContas] = useState([
-    { id: 1, descricao: 'Aluguel', valor: 1200, tipo: 'A Pagar', data: '2025-03-20' },
-    { id: 2, descricao: 'Salário', valor: 5000, tipo: 'A Receber', data: '2025-03-25' },
-    { id: 3, descricao: 'Internet', valor: 120, tipo: 'A Pagar', data: '2025-03-28' }
-  ])
+  const [contas, setContas] = useState([])
 
-  const handleAddConta = (novaConta) => {
-    setContas([...contas, { ...novaConta, id: contas.length + 1 }])
+  useEffect(() => {
+    fetchContas()
+  }, [])
+
+  const fetchContas = async () => {
+    const { data, error } = await supabase
+      .from('contas')
+      .select('*')
+      .order('data', { ascending: true })
+    
+    if (error) {
+      console.error('Error fetching contas:', error)
+    } else {
+      setContas(data)
+    }
+  }
+
+  const handleAddConta = async (novaConta) => {
+    const { data, error } = await supabase
+      .from('contas')
+      .insert([novaConta])
+      .select()
+    
+    if (error) {
+      console.error('Error adding conta:', error)
+    } else {
+      setContas([...contas, data[0]])
+    }
   }
 
   return (

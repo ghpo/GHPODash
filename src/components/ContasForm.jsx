@@ -3,20 +3,24 @@ import React, { useState } from 'react'
 export default function ContasForm({ onAddConta }) {
   const [descricao, setDescricao] = useState('')
   const [valor, setValor] = useState('')
-  const [tipo, setTipo] = useState('')
+  const [tipo, setTipo] = useState('A Pagar')
   const [data, setData] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    onAddConta({
+    
+    const novaConta = {
       descricao,
       valor: parseFloat(valor),
       tipo,
       data
-    })
+    }
+
+    await onAddConta(novaConta)
+    
     setDescricao('')
     setValor('')
-    setTipo('')
+    setTipo('A Pagar')
     setData('')
   }
 
@@ -55,9 +59,8 @@ export default function ContasForm({ onAddConta }) {
           className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100"
           required
         >
-          <option value="">Selecione</option>
-          <option value="pagar">A Pagar</option>
-          <option value="receber">A Receber</option>
+          <option value="A Pagar">A Pagar</option>
+          <option value="A Receber">A Receber</option>
         </select>
       </div>
 
